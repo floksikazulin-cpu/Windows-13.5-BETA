@@ -2,65 +2,76 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Windows 11 Web Desktop</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome для иконок -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 13.5 Beta</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Рабочий стол -->
-    <div id="desktop" class="desktop">
-        <!-- Рабочие иконки -->
+    <div class="desktop" id="desktop">
+        <!-- Иконки рабочего стола -->
         <div class="desktop-icons">
-            <div class="desktop-icon" data-app="trash" tabindex="0">
-                <div class="icon-img"><i class="fas fa-trash-alt"></i></div>
+            <div class="desktop-icon" data-app="trash">
+                <i class="fas fa-trash-alt icon-img"></i>
                 <span>Корзина</span>
             </div>
-            <div class="desktop-icon" data-app="computer" tabindex="0">
-                <div class="icon-img"><i class="fas fa-desktop"></i></div>
+            <div class="desktop-icon" data-app="computer">
+                <i class="fas fa-desktop icon-img"></i>
                 <span>Этот компьютер</span>
             </div>
-            <div class="desktop-icon" data-app="documents" tabindex="0">
-                <div class="icon-img"><i class="fas fa-folder-open"></i></div>
+            <div class="desktop-icon" data-app="documents">
+                <i class="fas fa-folder-open icon-img"></i>
                 <span>Документы</span>
             </div>
         </div>
 
-        <!-- Контейнер для открытых окон -->
+        <!-- Контейнер для окон -->
         <div id="windows-container"></div>
 
-        <!-- Контекстное меню (скрыто по умолчанию) -->
-        <div id="context-menu" class="context-menu hidden">
-            <div class="context-item" data-action="refresh"><i class="fas fa-sync-alt"></i> Обновить</div>
-            <div class="context-item" data-action="new-folder"><i class="fas fa-folder-plus"></i> Создать папку</div>
-            <div class="context-item" data-action="display-settings"><i class="fas fa-sliders-h"></i> Параметры экрана</div>
-            <div class="context-item" data-action="personalize"><i class="fas fa-paint-brush"></i> Персонализация</div>
+        <!-- Контекстное меню -->
+        <div class="context-menu hidden" id="context-menu">
+            <div class="context-item" data-action="refresh">
+                <i class="fas fa-sync-alt"></i>
+                <span>Обновить</span>
+            </div>
+            <div class="context-item" data-action="new-folder">
+                <i class="fas fa-folder-plus"></i>
+                <span>Создать папку</span>
+            </div>
+            <div class="context-separator"></div>
+            <div class="context-item" data-action="display-settings">
+                <i class="fas fa-desktop"></i>
+                <span>Параметры экрана</span>
+            </div>
+            <div class="context-item" data-action="personalize">
+                <i class="fas fa-paint-brush"></i>
+                <span>Персонализация</span>
+            </div>
         </div>
     </div>
 
     <!-- Меню Пуск -->
-    <div id="start-menu" class="start-menu hidden">
+    <div class="start-menu hidden" id="start-menu">
         <div class="start-header">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="start-search" placeholder="Поиск приложений...">
+                <input type="text" placeholder="Поиск в системе и интернете..." id="start-search">
             </div>
         </div>
+        
         <div class="start-content">
-            <div class="pinned-apps">
+            <div class="pinned-section">
                 <h3>Закрепленные</h3>
-                <div class="app-grid" id="pinned-grid">
-                    <!-- Закрепленные приложения добавляются через JS -->
-                </div>
+                <div class="app-grid" id="pinned-grid"></div>
             </div>
+            
             <div class="all-apps-section">
                 <h3>Все приложения</h3>
-                <div class="all-apps-list" id="all-apps-list">
-                    <!-- Список всех приложений добавляется через JS -->
-                </div>
+                <div class="all-apps-list" id="all-apps-list"></div>
             </div>
         </div>
+        
         <div class="start-footer">
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
@@ -73,37 +84,35 @@
     </div>
 
     <!-- Панель задач -->
-    <div id="taskbar" class="taskbar">
+    <div class="taskbar">
         <div class="taskbar-left">
-            <!-- Кнопка Пуск -->
-            <button id="start-btn" class="start-btn" aria-label="Пуск">
+            <button class="start-btn" id="start-btn">
                 <i class="fab fa-windows"></i>
             </button>
-            <!-- Иконки приложений на панели задач (быстрый доступ) -->
             <div class="taskbar-apps" id="taskbar-apps">
-                <button class="taskbar-app" data-app="explorer" title="Проводник">
+                <button class="taskbar-app" data-app="explorer">
                     <i class="fas fa-folder"></i>
                 </button>
-                <button class="taskbar-app" data-app="edge" title="Microsoft Edge">
+                <button class="taskbar-app" data-app="edge">
                     <i class="fab fa-edge"></i>
                 </button>
-                <button class="taskbar-app" data-app="settings" title="Настройки">
+                <button class="taskbar-app" data-app="settings">
                     <i class="fas fa-cog"></i>
                 </button>
-                <button class="taskbar-app" data-app="store" title="Магазин">
+                <button class="taskbar-app" data-app="store">
                     <i class="fas fa-store"></i>
                 </button>
             </div>
         </div>
+        
         <div class="taskbar-right">
-            <!-- Системный трей -->
             <div class="system-tray">
                 <div class="tray-icons">
-                    <i class="fas fa-volume-up" title="Звук"></i>
-                    <i class="fas fa-wifi" title="Сеть"></i>
-                    <i class="fas fa-battery-full" title="Батарея"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-volume-up"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
                 </div>
-                <div class="clock" id="clock">
+                <div class="clock">
                     <div class="time" id="time">12:00</div>
                     <div class="date" id="date">01.01.2025</div>
                 </div>
@@ -111,24 +120,23 @@
         </div>
     </div>
 
-    <!-- Шаблон окна (используется для создания новых окон) -->
+    <!-- Шаблон окна -->
     <template id="window-template">
-        <div class="window" style="width: 600px; height: 400px; top: 100px; left: 100px;">
+        <div class="window">
             <div class="window-header">
-                <div class="window-title"></div>
+                <div class="window-title">Приложение</div>
                 <div class="window-controls">
                     <button class="minimize"><i class="fas fa-minus"></i></button>
                     <button class="maximize"><i class="fas fa-square"></i></button>
                     <button class="close"><i class="fas fa-times"></i></button>
                 </div>
             </div>
-            <div class="window-content">
-                <!-- Содержимое окна добавляется динамически -->
-            </div>
-            <div class="resize-handle"></div>
+            <div class="window-content"></div>
         </div>
     </template>
 
-    <script src="script.js"></script>
+    <script src="apps.js"></script>
+    <script src="windows.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
