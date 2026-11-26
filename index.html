@@ -4,50 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows 13.5 Beta</title>
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Иконки Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Рабочий стол -->
     <div class="desktop" id="desktop">
-        <!-- Иконки рабочего стола -->
         <div class="desktop-icons">
-            <div class="desktop-icon" data-app="trash">
-                <i class="fas fa-trash-alt icon-img"></i>
-                <span>Корзина</span>
-            </div>
-            <div class="desktop-icon" data-app="computer">
-                <i class="fas fa-desktop icon-img"></i>
-                <span>Этот компьютер</span>
-            </div>
-            <div class="desktop-icon" data-app="documents">
-                <i class="fas fa-folder-open icon-img"></i>
-                <span>Документы</span>
-            </div>
+            <div class="desktop-icon" data-app="trash"><i class="fas fa-trash-alt"></i><span>Корзина</span></div>
+            <div class="desktop-icon" data-app="computer"><i class="fas fa-desktop"></i><span>Этот ПК</span></div>
+            <div class="desktop-icon" data-app="documents"><i class="fas fa-folder-open"></i><span>Документы</span></div>
         </div>
-
-        <!-- Контейнер для окон -->
+        
         <div id="windows-container"></div>
 
         <!-- Контекстное меню -->
         <div class="context-menu hidden" id="context-menu">
-            <div class="context-item" data-action="refresh">
-                <i class="fas fa-sync-alt"></i>
-                <span>Обновить</span>
-            </div>
-            <div class="context-item" data-action="new-folder">
-                <i class="fas fa-folder-plus"></i>
-                <span>Создать папку</span>
-            </div>
-            <div class="context-separator"></div>
-            <div class="context-item" data-action="display-settings">
-                <i class="fas fa-desktop"></i>
-                <span>Параметры экрана</span>
-            </div>
-            <div class="context-item" data-action="personalize">
-                <i class="fas fa-paint-brush"></i>
-                <span>Персонализация</span>
-            </div>
+            <div class="ctx-item" data-action="refresh"><i class="fas fa-sync-alt"></i> Обновить</div>
+            <div class="ctx-sep"></div>
+            <div class="ctx-item" data-action="settings"><i class="fas fa-cog"></i> Персонализация</div>
         </div>
     </div>
 
@@ -56,66 +33,36 @@
         <div class="start-header">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Поиск в системе и интернете..." id="start-search">
+                <input type="text" placeholder="Поиск приложений..." id="start-search">
             </div>
         </div>
-        
         <div class="start-content">
-            <div class="pinned-section">
-                <h3>Закрепленные</h3>
-                <div class="app-grid" id="pinned-grid"></div>
-            </div>
-            
-            <div class="all-apps-section">
-                <h3>Все приложения</h3>
-                <div class="all-apps-list" id="all-apps-list"></div>
-            </div>
+            <h3>Закрепленные</h3>
+            <div class="app-grid" id="pinned-grid"></div>
+            <h3 style="margin-top:20px;">Все приложения</h3>
+            <div class="all-apps-list" id="all-apps-list"></div>
         </div>
-        
         <div class="start-footer">
-            <div class="user-info">
-                <i class="fas fa-user-circle"></i>
-                <span>Пользователь</span>
-            </div>
-            <div class="power-btn" id="power-btn">
-                <i class="fas fa-power-off"></i>
-            </div>
+            <div class="user-info"><i class="fas fa-user-circle"></i> User</div>
+            <div class="power-btn" id="power-btn"><i class="fas fa-power-off"></i></div>
         </div>
     </div>
 
     <!-- Панель задач -->
     <div class="taskbar">
-        <div class="taskbar-left">
-            <button class="start-btn" id="start-btn">
-                <i class="fab fa-windows"></i>
-            </button>
-            <div class="taskbar-apps" id="taskbar-apps">
-                <button class="taskbar-app" data-app="explorer">
-                    <i class="fas fa-folder"></i>
-                </button>
-                <button class="taskbar-app" data-app="edge">
-                    <i class="fab fa-edge"></i>
-                </button>
-                <button class="taskbar-app" data-app="settings">
-                    <i class="fas fa-cog"></i>
-                </button>
-                <button class="taskbar-app" data-app="store">
-                    <i class="fas fa-store"></i>
-                </button>
-            </div>
+        <div class="taskbar-center">
+            <button class="start-btn" id="start-btn"><i class="fab fa-windows"></i></button>
+            <div class="taskbar-apps" id="taskbar-apps"></div>
         </div>
-        
-        <div class="taskbar-right">
-            <div class="system-tray">
-                <div class="tray-icons">
-                    <i class="fas fa-wifi"></i>
-                    <i class="fas fa-volume-up"></i>
-                    <i class="fas fa-battery-three-quarters"></i>
-                </div>
-                <div class="clock">
-                    <div class="time" id="time">12:00</div>
-                    <div class="date" id="date">01.01.2025</div>
-                </div>
+        <div class="system-tray">
+            <div class="tray-icons">
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-volume-up"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+            <div class="clock">
+                <div class="time" id="time">12:00</div>
+                <div class="date" id="date">01.01.2026</div>
             </div>
         </div>
     </div>
@@ -124,10 +71,10 @@
     <template id="window-template">
         <div class="window">
             <div class="window-header">
-                <div class="window-title">Приложение</div>
+                <div class="window-title">App Name</div>
                 <div class="window-controls">
                     <button class="minimize"><i class="fas fa-minus"></i></button>
-                    <button class="maximize"><i class="fas fa-square"></i></button>
+                    <button class="maximize"><i class="far fa-square"></i></button>
                     <button class="close"><i class="fas fa-times"></i></button>
                 </div>
             </div>
@@ -135,8 +82,10 @@
         </div>
     </template>
 
+    <!-- Скрипты -->
     <script src="apps.js"></script>
     <script src="windows.js"></script>
+    <script src="ui.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
