@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
     user-select: none;
 }
 
@@ -14,15 +14,73 @@ body {
     background: #000;
 }
 
+/* ========== ТЕМЫ ========== */
+:root {
+    /* Темная тема (по умолчанию) */
+    --bg-primary: #0a0e27;
+    --bg-secondary: rgba(32, 32, 42, 0.92);
+    --bg-tertiary: rgba(45, 45, 55, 0.85);
+    --bg-hover: rgba(255, 255, 255, 0.08);
+    --bg-active: rgba(255, 255, 255, 0.12);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --text-disabled: #6b6b7b;
+    
+    --accent-primary: #00d4ff;
+    --accent-secondary: #8b5cf6;
+    --accent-success: #10b981;
+    --accent-warning: #f59e0b;
+    --accent-error: #ef4444;
+    
+    --border-light: rgba(255, 255, 255, 0.12);
+    --border-medium: rgba(255, 255, 255, 0.2);
+    
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* Светлая тема */
+body.light-theme {
+    --bg-primary: #f8fafc;
+    --bg-secondary: rgba(255, 255, 255, 0.95);
+    --bg-tertiary: #f1f5f9;
+    --bg-hover: rgba(0, 0, 0, 0.04);
+    --bg-active: rgba(0, 0, 0, 0.08);
+    
+    --text-primary: #1a1a2e;
+    --text-secondary: #6b7280;
+    --text-disabled: #9ca3af;
+    
+    --accent-primary: #0066cc;
+    --accent-secondary: #7c3aed;
+    --accent-success: #059669;
+    --accent-warning: #d97706;
+    --accent-error: #dc2626;
+    
+    --border-light: rgba(0, 0, 0, 0.08);
+    --border-medium: rgba(0, 0, 0, 0.15);
+    
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
 /* ========== РАБОЧИЙ СТОЛ ========== */
 .desktop {
     position: relative;
     width: 100%;
     height: 100%;
-    background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop') center/cover no-repeat;
-    /* Запасные обои, если изображение не загрузится */
-    background-color: #1e3c72;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, #1a1f4b 100%);
     overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+body.light-theme .desktop {
+    background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f2 100%);
 }
 
 /* Рабочие иконки */
@@ -44,39 +102,58 @@ body {
     padding: 8px 4px;
     border-radius: 6px;
     cursor: pointer;
-    color: white;
+    color: var(--text-primary);
     text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    transition: background 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .desktop-icon:hover {
-    background: rgba(255,255,255,0.15);
+    background: var(--bg-hover);
+    transform: scale(1.02);
+}
+
+.desktop-icon.selected {
+    background: var(--bg-active);
+    border: 1px solid var(--accent-primary);
 }
 
 .desktop-icon .icon-img {
     font-size: 36px;
     margin-bottom: 6px;
-    color: #e0e0e0;
+    color: var(--text-primary);
 }
 
 .desktop-icon span {
     font-size: 12px;
     text-align: center;
     word-break: break-word;
+    color: var(--text-primary);
 }
 
 /* ========== КОНТЕКСТНОЕ МЕНЮ ========== */
 .context-menu {
     position: fixed;
-    background: rgba(40, 40, 40, 0.95);
+    background: var(--bg-secondary);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid var(--border-light);
     border-radius: 8px;
     padding: 6px 0;
     min-width: 220px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    box-shadow: var(--shadow-md);
     z-index: 10000;
-    color: white;
+    color: var(--text-primary);
+    animation: menuAppear 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes menuAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .context-menu.hidden {
@@ -90,16 +167,22 @@ body {
     gap: 12px;
     font-size: 13px;
     cursor: pointer;
-    transition: background 0.1s;
+    transition: background 0.15s;
 }
 
 .context-item:hover {
-    background: rgba(255,255,255,0.1);
+    background: var(--bg-hover);
 }
 
 .context-item i {
     width: 18px;
-    color: #aaa;
+    color: var(--text-secondary);
+}
+
+.context-separator {
+    height: 1px;
+    background: var(--border-light);
+    margin: 4px 0;
 }
 
 /* ========== МЕНЮ ПУСК ========== */
@@ -112,15 +195,15 @@ body {
     max-width: 90vw;
     height: 550px;
     max-height: 70vh;
-    background: rgba(40, 40, 40, 0.92);
+    background: var(--bg-secondary);
     backdrop-filter: blur(30px);
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 12px 48px rgba(0,0,0,0.6);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-xl);
     display: flex;
     flex-direction: column;
     z-index: 9999;
-    color: white;
+    color: var(--text-primary);
     overflow: hidden;
     transition: opacity 0.2s, transform 0.2s;
 }
@@ -138,29 +221,34 @@ body {
 .search-box {
     display: flex;
     align-items: center;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--bg-hover);
+    border: 1px solid var(--border-light);
     border-radius: 24px;
     padding: 8px 16px;
     gap: 10px;
+    transition: border-color 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: var(--accent-primary);
 }
 
 .search-box i {
-    color: #aaa;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
 .search-box input {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--text-primary);
     font-size: 14px;
     flex: 1;
     outline: none;
 }
 
 .search-box input::placeholder {
-    color: #888;
+    color: var(--text-secondary);
 }
 
 .start-content {
@@ -175,7 +263,7 @@ body {
 .start-content h3 {
     font-size: 13px;
     font-weight: 600;
-    color: #bbb;
+    color: var(--text-secondary);
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -194,23 +282,24 @@ body {
     padding: 10px 4px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.15s;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .pinned-app-item:hover {
-    background: rgba(255,255,255,0.08);
+    background: var(--bg-hover);
+    transform: scale(1.05);
 }
 
 .pinned-app-item i {
     font-size: 28px;
     margin-bottom: 6px;
-    color: #e0e0e0;
+    color: var(--text-primary);
 }
 
 .pinned-app-item span {
     font-size: 11px;
     text-align: center;
-    color: #ddd;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -235,13 +324,13 @@ body {
 }
 
 .all-app-item:hover {
-    background: rgba(255,255,255,0.08);
+    background: var(--bg-hover);
 }
 
 .all-app-item i {
     width: 24px;
     font-size: 18px;
-    color: #ccc;
+    color: var(--text-secondary);
 }
 
 .start-footer {
@@ -249,8 +338,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 20px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    background: rgba(30,30,30,0.5);
+    border-top: 1px solid var(--border-light);
+    background: var(--bg-tertiary);
 }
 
 .user-info {
@@ -258,11 +347,12 @@ body {
     align-items: center;
     gap: 10px;
     font-size: 14px;
+    color: var(--text-primary);
 }
 
 .user-info i {
     font-size: 24px;
-    color: #aaa;
+    color: var(--text-secondary);
 }
 
 .power-btn {
@@ -277,12 +367,12 @@ body {
 }
 
 .power-btn:hover {
-    background: rgba(255,255,255,0.1);
+    background: var(--bg-hover);
 }
 
 .power-btn i {
     font-size: 18px;
-    color: #ddd;
+    color: var(--text-primary);
 }
 
 /* ========== ПАНЕЛЬ ЗАДАЧ ========== */
@@ -292,15 +382,15 @@ body {
     left: 0;
     right: 0;
     height: 56px;
-    background: rgba(30, 30, 30, 0.9);
+    background: var(--bg-secondary);
     backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid var(--border-light);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 12px;
     z-index: 10000;
-    color: white;
+    color: var(--text-primary);
 }
 
 .taskbar-left {
@@ -315,18 +405,24 @@ body {
     height: 44px;
     border: none;
     background: transparent;
-    color: #e0e0e0;
+    color: var(--text-primary);
     font-size: 22px;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.15s;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .start-btn:hover {
-    background: rgba(255,255,255,0.1);
+    background: var(--bg-hover);
+    transform: scale(1.05);
+}
+
+.start-btn.active {
+    background: var(--bg-active);
+    box-shadow: 0 0 10px var(--accent-primary);
 }
 
 .taskbar-apps {
@@ -339,18 +435,33 @@ body {
     height: 44px;
     border: none;
     background: transparent;
-    color: #ddd;
+    color: var(--text-secondary);
     font-size: 20px;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.15s;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
 }
 
 .taskbar-app:hover {
-    background: rgba(255,255,255,0.12);
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    transform: scale(1.05);
+}
+
+.taskbar-app.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 3px;
+    background: var(--accent-primary);
+    border-radius: 2px;
 }
 
 .taskbar-right {
@@ -368,20 +479,21 @@ body {
 }
 
 .system-tray:hover {
-    background: rgba(255,255,255,0.08);
+    background: var(--bg-hover);
 }
 
 .tray-icons {
     display: flex;
     gap: 12px;
     font-size: 16px;
-    color: #ddd;
+    color: var(--text-secondary);
 }
 
 .clock {
     text-align: right;
     font-size: 12px;
     line-height: 1.3;
+    color: var(--text-primary);
 }
 
 .clock .time {
@@ -389,30 +501,70 @@ body {
 }
 
 .clock .date {
-    color: #aaa;
+    color: var(--text-secondary);
 }
 
 /* ========== ОКНА ========== */
 .window {
     position: absolute;
-    background: rgba(32, 32, 32, 0.95);
+    background: var(--bg-secondary);
     backdrop-filter: blur(20px);
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-lg);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     min-width: 300px;
     min-height: 200px;
     z-index: 100;
-    color: white;
-    transition: box-shadow 0.2s;
+    color: var(--text-primary);
+    transition: box-shadow 0.2s, transform 0.2s;
+    animation: windowOpen 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes windowOpen {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.window.closing {
+    animation: windowClose 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes windowClose {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
 }
 
 .window.active {
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-    border-color: rgba(255,255,255,0.2);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--border-medium);
+    z-index: 1000 !important;
+}
+
+.window.minimized {
+    display: none;
+}
+
+.window.maximized {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: calc(100vh - 56px) !important;
+    border-radius: 0;
 }
 
 .window-header {
@@ -421,8 +573,8 @@ body {
     align-items: center;
     padding: 0 8px 0 16px;
     height: 40px;
-    background: rgba(45, 45, 45, 0.9);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-light);
     cursor: grab;
     flex-shrink: 0;
 }
@@ -434,7 +586,7 @@ body {
 .window-title {
     font-size: 13px;
     font-weight: 500;
-    color: #eee;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -450,22 +602,23 @@ body {
     height: 32px;
     border: none;
     background: transparent;
-    color: #ccc;
+    color: var(--text-secondary);
     cursor: pointer;
     border-radius: 4px;
     font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.1s;
+    transition: all 0.1s;
 }
 
 .window-controls button:hover {
-    background: rgba(255,255,255,0.1);
+    background: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .window-controls .close:hover {
-    background: #e81123;
+    background: var(--accent-error);
     color: white;
 }
 
@@ -474,7 +627,7 @@ body {
     overflow: auto;
     padding: 16px;
     font-size: 14px;
-    color: #ddd;
+    color: var(--text-primary);
 }
 
 .window-content::-webkit-scrollbar {
@@ -482,8 +635,12 @@ body {
 }
 
 .window-content::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.15);
+    background: var(--bg-hover);
     border-radius: 4px;
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-active);
 }
 
 /* Заглушки для содержимого окон */
@@ -494,16 +651,93 @@ body {
     justify-content: center;
     height: 100%;
     gap: 16px;
-    color: #888;
+    color: var(--text-secondary);
 }
 
 .app-placeholder i {
     font-size: 64px;
-    color: #555;
+    color: var(--text-disabled);
 }
 
 .app-placeholder p {
     font-size: 16px;
+}
+
+/* ========== УВЕДОМЛЕНИЯ ========== */
+.notification-center {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 360px;
+    max-height: 500px;
+    background: var(--bg-secondary);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-xl);
+    z-index: 9998;
+    overflow: hidden;
+    transform: translateX(400px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notification-center.show {
+    transform: translateX(0);
+}
+
+.notification-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.notification-list {
+    padding: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.notification-item:hover {
+    background: var(--bg-hover);
+}
+
+.notification-item:last-child {
+    margin-bottom: 0;
+}
+
+.notification-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.notification-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.notification-time {
+    font-size: 11px;
+    color: var(--text-disabled);
+    margin-top: 4px;
 }
 
 /* ========== АДАПТИВНОСТЬ ========== */
@@ -553,6 +787,11 @@ body {
         font-size: 14px;
         gap: 8px;
     }
+    
+    .notification-center {
+        width: calc(100vw - 40px);
+        right: 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -568,4 +807,58 @@ body {
     .tray-icons {
         gap: 6px;
     }
+    
+    .desktop-icons {
+        top: 10px;
+        left: 10px;
+        gap: 15px;
+    }
+}
+
+/* ========== АНИМАЦИИ ========== */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== СКРОЛЛБАР ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-hover);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-active);
 }
